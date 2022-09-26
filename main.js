@@ -156,7 +156,7 @@ function createTasksElement(tasktxt, id, completed = false) {
 }
 //show all tasks from tasksList array
 function showTasks() {
-	for (let i = 0; i < tasksList.length; i++) {
+	for (let i = 0; i <= tasksList.length; i++) {
 		createTasksElement(
 			tasksList[i].text,
 			tasksList[i].id,
@@ -176,7 +176,7 @@ let delTask = document.addEventListener("click", function (e) {
 		tasksList.shift(i)
 
 		//check array length to determind if showing no task paragraph and delete stored object task or not
-		if (tasksList.length === 0) {
+		if (tasksList.length < 1) {
 			//remove tasks object from localstorage
 			window.localStorage.removeItem("tasks")
 			//reset data-ids item to zero index
