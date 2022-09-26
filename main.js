@@ -12,7 +12,7 @@ let tasksContent = document.querySelector(".content")
 let addTaskFBtn = document.querySelector(".form button")
 
 //create paragraph with message no tasks here
-let noTask = document.createElement("p")
+const noTask = document.createElement("p")
 noTask.className = "noTask"
 noTask.textContent = `There Is No Tasks To Do.. Have Fun 😉`
 
@@ -21,7 +21,7 @@ let tasksList = []
 //create Data id and store in localStorage
 let dataID
 if (window.localStorage.getItem("data-ids") === null) {
-	console.log("No Data")
+	// console.log("No Data")
 	dataID = 0
 	window.localStorage.setItem("data-ids", dataID)
 } else {
@@ -37,15 +37,20 @@ document.addEventListener("DOMContentLoaded", function () {
 		updater(tasksList)
 		//Show  tasks list in content element
 		showTasks()
-		//append noTask Element but set display none
 		/* this will fix after delete all completed task show noTasks element */
-		tasksContent.prepend(noTask)
-		tasksContent.firstChild.style.display = "none"
+		tasksContent.firstChild.remove()
 	} else {
 		tasksContent.appendChild(noTask)
 	}
 })
-
+//add event listener document changed : add noTask Paragraph to tasksContent element
+document.addEventListener("change", (e) => {
+	setInterval((e) => {
+		if (tasksContent.innerHTML == "") {
+			tasksContent.appendChild(noTask)
+		}
+	})
+})
 //close pop up when click anywhere outside of add task element or close icon
 document.addEventListener("click", function (e) {
 	if (
@@ -56,12 +61,12 @@ document.addEventListener("click", function (e) {
 		popUpAddTask.style.display = "none"
 	}
 	//remove textbox and alert text from Task List Content
-	console.log(e.target)
+
 	if (
 		e.target.className !== "alert" &&
 		e.target.getAttribute("type") !== "text"
 	) {
-		console.log("e.target.attib ", e.target.getAttribute("type"))
+		// console.log("e.target.attib ", e.target.getAttribute("type"))
 		document.querySelectorAll(".alert").forEach((ele) => {
 			ele.remove()
 		})
@@ -92,7 +97,7 @@ addTaskFBtn.onclick = function () {
 	if (task.value !== "") {
 		//remove no task pragraph from tasks element
 		if (tasksContent.firstChild.className === "noTask") {
-			tasksContent.firstChild.style.display = "none"
+			tasksContent.firstChild.remove()
 		}
 		let newtask = {
 			id: ++dataID,
@@ -169,15 +174,15 @@ let delTask = document.addEventListener("click", function (e) {
 			e.target.parentNode.parentElement.getAttribute("data-id")
 		)
 		tasksList.shift(i)
+
 		//check array length to determind if showing no task paragraph and delete stored object task or not
-		if (tasksList.length < 1) {
+		if (tasksList.length === 0) {
 			//remove tasks object from localstorage
 			window.localStorage.removeItem("tasks")
 			//reset data-ids item to zero index
 			window.localStorage.setItem("data-ids", "0")
-			noTask.style.display = "flex" //show not tasks pragraph
 		} else {
-			//update local storage whit array elements
+			//update local storage with array elements
 			updater(tasksList)
 		}
 		e.target.parentNode.parentElement.remove()
@@ -188,7 +193,6 @@ let delTask = document.addEventListener("click", function (e) {
 let doneBtn = document.addEventListener("click", function (e) {
 	if (e.target.classList.contains("done")) {
 		let x = e.target.parentNode.parentElement.getAttribute("data-id")
-		console.log(x)
 		for (let l = 0; l < tasksList.length; l++) {
 			if (parseInt(x) === tasksList[l].id) {
 				tasksList[l].completed = true
