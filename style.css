@@ -14,7 +14,6 @@ body {
   
   .showContent {
     position: absolute;
-    width: 500px;
     text-align: center;
     height: 500px;
     top: 50%;
@@ -94,13 +93,13 @@ body {
   }
   /* Task Div */
   .content .task {
-    display: inline-flex;
+    display: flex;
     background: #009688;
-    padding: 5px 12px;
+    padding: 5px;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    width: 90%;
+    width: 94%;
     border-radius: 10px;
     margin: 5px 0px;
     color: #fff;
@@ -125,7 +124,7 @@ body {
     height: 30px;
     border-radius: 50%;
     padding: 5px;
-    margin-left: 3px;
+    margin: 2px 1px;
     font-size: 12px;
     cursor: pointer;
     outline: none;
