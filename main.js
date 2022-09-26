@@ -180,13 +180,16 @@ let delTask = document.addEventListener("click", function (e) {
 		let i = parseInt(
 			e.target.parentNode.parentElement.getAttribute("data-id")
 		)
-		console.log(i)
-		for (let j = 0; j < tasksList.length; j++) {
-			if (tasksList[j].id === i) {
-				//remove only identical element in taskslist array
-				tasksList.splice(j, 1)
+		//console.log(i)
+		//old Method to delete item from taskslist
+		//delete Task from taskList Based on Current element id
+		tasksList = tasksList.filter((e) => {
+			if (e.id !== i) {
+				return e
 			}
-		}
+		})
+
+		console.log("tasksList: ", tasksList)
 
 		//check array length to determind if showing no task paragraph and delete stored object task or not
 		if (tasksList.length < 1) {
