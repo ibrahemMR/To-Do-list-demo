@@ -1,9 +1,12 @@
 //add task button showing pop up element
 let addTaskBtn = document.getElementById("addNew")
+
 //get PopUp element
 let popUpAddTask = document.getElementById("popUpAdd")
+
 //Close PopUp BTN
 let close = document.getElementById("closePopUp")
+
 //get input field value of new task
 let task = document.querySelector(".form #text")
 let tasksContent = document.querySelector(".content")
@@ -27,7 +30,7 @@ if (window.localStorage.getItem("data-ids") === null) {
 } else {
 	dataID = parseInt(window.localStorage.getItem("data-ids"))
 }
-//get stored tasks => store im storedList
+//get stored tasks => store in storedList
 //on document load check if there is any tasks
 document.addEventListener("DOMContentLoaded", function () {
 	if (window.localStorage.getItem("tasks") !== null) {
@@ -36,10 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		let storedList = window.localStorage.getItem("tasks")
 		//using json to return stored text as objects
 		tasksList = tasksList.concat(JSON.parse(storedList))
-		console.log("storedList: ", storedList)
-
+		//udpate
 		updater(tasksList)
-
 		//Show  tasks list in content element
 		showTasks()
 	} else {
@@ -111,7 +112,7 @@ addTaskFBtn.onclick = function () {
 		//add new task to taskslist array
 		tasksList.push(newtask)
 		//store in localstorage
-		window.localStorage.setItem("tasks", JSON.stringify(tasksList))
+		updater(tasksList)
 		//close popup form
 		popUpAddTask.style.display = "none"
 		createTasksElement(task.value, dataID, false)
@@ -156,6 +157,8 @@ function createTasksElement(tasktxt, id, completed = false) {
 		newTask.append(controls)
 		tasksContent.append(newTask)
 	}
+	// window.localStorage.setItem("tasks", JSON.stringify(tasksList))
+	updater(tasksList)
 }
 //show all tasks from tasksList array
 function showTasks() {
@@ -174,10 +177,16 @@ let delTask = document.addEventListener("click", function (e) {
 	if (e.target.classList.contains("delete")) {
 		/* get Element With indexOf in content array */
 		//get element index with data-id
-		const i = parseInt(
+		let i = parseInt(
 			e.target.parentNode.parentElement.getAttribute("data-id")
 		)
-		tasksList.shift(i)
+		console.log(i)
+		for (let j = 0; j < tasksList.length; j++) {
+			if (tasksList[j].id === i) {
+				//remove only identical element in taskslist array
+				tasksList.splice(j, 1)
+			}
+		}
 
 		//check array length to determind if showing no task paragraph and delete stored object task or not
 		if (tasksList.length < 1) {
@@ -185,10 +194,12 @@ let delTask = document.addEventListener("click", function (e) {
 			window.localStorage.removeItem("tasks")
 			//reset data-ids item to zero index
 			window.localStorage.setItem("data-ids", 0)
+
 			//append no task pragraph element
 			tasksContent.appendChild(noTask)
 		} else {
 			//update local storage with array elements
+			console.log("tasksList: ", tasksList)
 			updater(tasksList)
 		}
 		e.target.parentNode.parentElement.remove()
@@ -204,8 +215,9 @@ let doneBtn = document.addEventListener("click", function (e) {
 				tasksList[l].completed = true
 			}
 		}
-		//update local object whit array elements
+		//update local Storage object whit array elements
 		updater(tasksList)
+		// window.localStorage.setItem("tasks", JSON.stringify(tasksList))
 		//update tasksContainer with new tasks in localstorage
 		tasksContent.innerHTML = ""
 		showTasks()
@@ -222,7 +234,9 @@ let updater = function (arr) {
 			e
 		})
 	)
-	window.localStorage.setItem("tasks", JSON.stringify(arr))
+	if (arr.length !== 0) {
+		window.localStorage.setItem("tasks", JSON.stringify(arr))
+	}
 }
 
 //edit task function
@@ -265,7 +279,8 @@ let editBtn = document.addEventListener("click", function (e) {
 				}
 
 				//update local object whit array elements
-				updater(tasksList)
+				// updater(tasksList)
+				window.localStorage.setItem("tasks", JSON.stringify(tasksList))
 				editBox.remove()
 				tasksContent.innerHTML = ""
 				showTasks()
