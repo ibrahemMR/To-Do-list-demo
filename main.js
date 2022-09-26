@@ -211,7 +211,7 @@ let doneBtn = document.addEventListener("click", function (e) {
 				e.completed = true
 			}
 		})
-		//update local Storage object whit array elements
+		//update local Storage object with array elements
 		updater(tasksList)
 
 		//update tasksContainer with new tasks in localstorage
@@ -222,7 +222,8 @@ let doneBtn = document.addEventListener("click", function (e) {
 
 /* updater : arguments [array of tasks list]
 	-filter array from empty elements which happend when [delete] some task
-	-update all tasks [object id] to current index in tasksList array 
+	-update all tasks [object id] to current index in tasksList array
+	-update localStorage object data
 */
 let updater = function (arr) {
 	arr.concat(
@@ -239,9 +240,7 @@ let updater = function (arr) {
 let editBtn = document.addEventListener("click", function (e) {
 	if (e.target.classList.contains("edit")) {
 		//check if there is any opened text box
-
-		const i = parseInt(
-			//error with reading this fucking id
+		let i = parseInt(
 			e.target.parentNode.parentElement.getAttribute("data-id")
 		)
 		//create new div element to set textBox
@@ -254,25 +253,24 @@ let editBtn = document.addEventListener("click", function (e) {
 		alertText.textContent = `* Hit Enter key to Update *`
 		inputBox.setAttribute("type", "text")
 
-		//set edit input box value to selected task text
-		//create loop through taskslist array to set new value depending on data-id
-		for (let l = 0; l < tasksList.length; l++) {
-			if (i === tasksList[l].id) {
-				inputBox.value = tasksList[l].text
+		//get selected task text and set in input box
+		tasksList.map((e) => {
+			if (e.id == i) {
+				inputBox.value = e.text
 			}
-		}
+		})
 		editBox.appendChild(inputBox)
 		e.target.parentElement.parentElement.after(alertText, editBox)
 		inputBox.focus()
 		inputBox.addEventListener("keyup", (e) => {
 			if (e.keyCode === 13) {
 				e.preventDefault()
-				//loooop again to set new value
-				for (let l = 0; l < tasksList.length; l++) {
-					if (i === tasksList[l].id) {
-						tasksList[l].text = inputBox.value
+				//set new value to taskslist array
+				tasksList.map((e) => {
+					if (e.id == i) {
+						e.text = inputBox.value
 					}
-				}
+				})
 
 				//update local object whit array elements
 				// updater(tasksList)
