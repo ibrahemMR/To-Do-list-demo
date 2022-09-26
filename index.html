@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+			integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer" />
+		<title>To Do list</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="showContent">
+				<div id="tag">
+					<h3>#Learning JS</h3>
+				</div>
+				<p>
+					#Demo <span>TO-DO List App</span> <br />
+					[ ➕ Add | ✅ Complete | ✍ Edit | ❌ Delete ]<span>
+						Task
+					</span>
+				</p>
+
+				<div class="content"></div>
+				<div class="completed"></div>
+				<button id="addNew">
+					<i class="fa-solid fa-plus"></i>
+				</button>
+			</div>
+		</div>
+		<div id="popUpAdd">
+			<div class="addTask">
+				<span id="closePopUp"><i class="fa-solid fa-xmark"></i></span>
+				<h2>Add New Task</h2>
+				<div class="form">
+					<input
+						id="text"
+						type="text"
+						placeholder="What You Want To Do ?!" />
+					<button><i class="fa-solid fa-plus"></i></button>
+				</div>
+			</div>
+		</div>
+
+		<div class="phoneError">
+			Alert ❌ ("Please Open Page in Wide Screen!!")
+		</div>
+		<script src="main.js"></script>
+	</body>
+</html>
