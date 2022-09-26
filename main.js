@@ -160,16 +160,11 @@ function createTasksElement(tasktxt, id, completed = false) {
 	// window.localStorage.setItem("tasks", JSON.stringify(tasksList))
 	updater(tasksList)
 }
-//show all tasks from tasksList array
+//show all tasks from tasksList array using map method
 function showTasks() {
-	for (let i = 0; i < tasksList.length; i++) {
-		createTasksElement(
-			tasksList[i].text,
-			tasksList[i].id,
-			tasksList[i].completed
-		)
-		// console.log(i)
-	}
+	tasksList.map((e) => {
+		createTasksElement(e.text, e.id, e.completed)
+	})
 }
 
 //delete task from Content and localstorage
@@ -180,16 +175,13 @@ let delTask = document.addEventListener("click", function (e) {
 		let i = parseInt(
 			e.target.parentNode.parentElement.getAttribute("data-id")
 		)
-		//console.log(i)
-		//old Method to delete item from taskslist
+
 		//delete Task from taskList Based on Current element id
 		tasksList = tasksList.filter((e) => {
 			if (e.id !== i) {
 				return e
 			}
 		})
-
-		console.log("tasksList: ", tasksList)
 
 		//check array length to determind if showing no task paragraph and delete stored object task or not
 		if (tasksList.length < 1) {
@@ -202,7 +194,7 @@ let delTask = document.addEventListener("click", function (e) {
 			tasksContent.appendChild(noTask)
 		} else {
 			//update local storage with array elements
-			console.log("tasksList: ", tasksList)
+
 			updater(tasksList)
 		}
 		e.target.parentNode.parentElement.remove()
@@ -213,14 +205,15 @@ let delTask = document.addEventListener("click", function (e) {
 let doneBtn = document.addEventListener("click", function (e) {
 	if (e.target.classList.contains("done")) {
 		let x = e.target.parentNode.parentElement.getAttribute("data-id")
-		for (let l = 0; l < tasksList.length; l++) {
-			if (parseInt(x) === tasksList[l].id) {
-				tasksList[l].completed = true
+		/* Change Task Completed proparty to true */
+		tasksList.map((e) => {
+			if (e.id == x) {
+				e.completed = true
 			}
-		}
+		})
 		//update local Storage object whit array elements
 		updater(tasksList)
-		// window.localStorage.setItem("tasks", JSON.stringify(tasksList))
+
 		//update tasksContainer with new tasks in localstorage
 		tasksContent.innerHTML = ""
 		showTasks()
