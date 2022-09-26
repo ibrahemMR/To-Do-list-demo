@@ -31,14 +31,17 @@ if (window.localStorage.getItem("data-ids") === null) {
 //on document load check if there is any tasks
 document.addEventListener("DOMContentLoaded", function () {
 	if (window.localStorage.getItem("tasks") !== null) {
+		/* this will fix after delete all completed task show noTasks element */
+		noTask.remove()
 		let storedList = window.localStorage.getItem("tasks")
 		//using json to return stored text as objects
 		tasksList = tasksList.concat(JSON.parse(storedList))
+		console.log("storedList: ", storedList)
+
 		updater(tasksList)
+
 		//Show  tasks list in content element
 		showTasks()
-		/* this will fix after delete all completed task show noTasks element */
-		tasksContent.firstChild.remove()
 	} else {
 		tasksContent.appendChild(noTask)
 	}
@@ -46,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
 //add event listener document changed : add noTask Paragraph to tasksContent element
 document.addEventListener("change", (e) => {
 	setInterval((e) => {
-		if (tasksContent.innerHTML == "") {
-			tasksContent.appendChild(noTask)
+		if (tasksContent.innerHTML === "") {
+			tasksContent.innerHTML = noTask.textContent
 		}
 	})
 })
@@ -156,12 +159,13 @@ function createTasksElement(tasktxt, id, completed = false) {
 }
 //show all tasks from tasksList array
 function showTasks() {
-	for (let i = 0; i <= tasksList.length; i++) {
+	for (let i = 0; i < tasksList.length; i++) {
 		createTasksElement(
 			tasksList[i].text,
 			tasksList[i].id,
 			tasksList[i].completed
 		)
+		// console.log(i)
 	}
 }
 
@@ -180,7 +184,9 @@ let delTask = document.addEventListener("click", function (e) {
 			//remove tasks object from localstorage
 			window.localStorage.removeItem("tasks")
 			//reset data-ids item to zero index
-			window.localStorage.setItem("data-ids", "0")
+			window.localStorage.setItem("data-ids", 0)
+			//append no task pragraph element
+			tasksContent.appendChild(noTask)
 		} else {
 			//update local storage with array elements
 			updater(tasksList)
