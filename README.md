@@ -3,7 +3,7 @@
 <p>#Demo TO-DO List App
 [ ➕ Add | ✅ Complete | ✍ Edit | ❌ Delete ] Tasks</p>
 <p style="font-weight:bold">Notes: I will Clean My Room not Clear it 🤣🤣🤣<p>
-<h4><a href="https://codepen.io/IbarM/full/PoeOPMP">Live Demo Here</a></h4>
+<h4><a href="https://codepen.io/IbarM/full/PoeOPMP">Codepin.io</a> | <a href="https://ibrahemmr.github.io/To-Do-list-demo/">GitHub Page</a></h4>
 <p  align="center">
     <img src="https://github.com/ibrahemMR/Learning-JS/blob/main/Elzero%20Challenges/L114-ToDolistChallenge/demo.gif">
 </p>
